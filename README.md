@@ -1,2 +1,6 @@
+<a href="https://github.com/Sakerini/Hivein">
+    <img src="https://github.com/Sakerini/Hivein/tree/main/Docs/logo.png" alt="Hivein logo" title="Hivein" align="right" height="60" />
+</a>
+
 # Hivein [WIP]
 Hivein a chatting platform
