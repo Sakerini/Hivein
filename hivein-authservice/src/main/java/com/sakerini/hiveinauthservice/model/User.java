@@ -45,6 +45,7 @@ public class User {
 
     @LastModifiedDate
     private Instant updatedAt;
+
     private boolean active;
 
     @OneToOne(cascade = CascadeType.ALL)
