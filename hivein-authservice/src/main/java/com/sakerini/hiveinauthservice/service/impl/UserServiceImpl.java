@@ -3,7 +3,7 @@ package com.sakerini.hiveinauthservice.service.impl;
 import com.sakerini.hiveinauthservice.exception.BaseException;
 import com.sakerini.hiveinauthservice.exception.EmailAlreadyExistsException;
 import com.sakerini.hiveinauthservice.exception.UsernameAlreadyExistsException;
-import com.sakerini.hiveinauthservice.model.Role;
+import com.sakerini.hiveinauthservice.model.Authority;
 import com.sakerini.hiveinauthservice.model.User;
 import com.sakerini.hiveinauthservice.repository.UserRepository;
 import com.sakerini.hiveinauthservice.service.JwtService;
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(User user, Role role) throws BaseException {
+    public User registerUser(User user, Authority role) throws BaseException {
         log.info("registering user {}", user.getUsername());
 
         if (userRepository.existsByUsername(user.getUsername())) {
@@ -68,9 +68,9 @@ public class UserServiceImpl implements UserService {
 
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>() {{
-            add(role);
-        }});
+        HashSet<Authority> authorities = new HashSet<>();
+        authorities.add(role);
+        user.setRoles(authorities);
 
         return userRepository.save(user);
     }

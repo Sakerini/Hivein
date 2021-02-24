@@ -2,8 +2,8 @@ package com.sakerini.hiveinauthservice.controller;
 
 import com.sakerini.hiveinauthservice.exception.BadRequestException;
 import com.sakerini.hiveinauthservice.exception.BaseException;
+import com.sakerini.hiveinauthservice.model.Authority;
 import com.sakerini.hiveinauthservice.model.Profile;
-import com.sakerini.hiveinauthservice.model.Role;
 import com.sakerini.hiveinauthservice.model.User;
 import com.sakerini.hiveinauthservice.model.request.LoginRequest;
 import com.sakerini.hiveinauthservice.model.request.RegisterRequest;
@@ -48,11 +48,13 @@ public class AuthController {
                                 .builder()
                                 .displayName(registerRequest.getName())
                                 .profilePictureUrl("NULL")
+                                .birthday(registerRequest.getBirthDay())
+                                .address(registerRequest.getAddress())
                                 .build())
                 .build();
 
         try {
-            userService.registerUser(user, new Role(user, Role.USER));
+            userService.registerUser(user, new Authority(user , Authority.USER));
         } catch (BaseException e) {
             throw new BadRequestException("code-400", e.getMessage());
         }

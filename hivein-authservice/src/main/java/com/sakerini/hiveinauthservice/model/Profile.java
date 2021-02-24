@@ -6,24 +6,25 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Setter
 @Getter
-@Builder
+@Setter
+@Table(name = "profiles")
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profile {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     @NotNull
     private String displayName;
     private String profilePictureUrl;
     private Date birthday;
 
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
 }

@@ -12,23 +12,26 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 
-@Setter
+
 @Getter
-@Builder
+@Setter
 @Entity
+@Builder
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue
-    private String id;
+    private long id;
+
     @NotBlank
     @Size(max = 15)
     @JsonIgnore
     private String username;
 
     @NotBlank
-    @Size(max = 40)
+    @Size(max = 80)
     @JsonIgnore
     private String password;
 
@@ -42,12 +45,12 @@ public class User {
 
     @LastModifiedDate
     private Instant updatedAt;
-
     private boolean active;
-    @OneToOne
-    @JoinColumn(name = "id")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
     private Profile userProfile;
 
-    @OneToMany(mappedBy = "id")
-    private Set<Role> roles;
+    @OneToMany(mappedBy = "user")
+    private Set<Authority> roles;
 }
