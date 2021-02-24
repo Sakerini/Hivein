@@ -52,7 +52,7 @@ public class AuthController {
                 .build();
 
         try {
-            userService.registerUser(user, new Role(Role.USER));
+            userService.registerUser(user, new Role(user, Role.USER));
         } catch (BaseException e) {
             throw new BadRequestException("code-400", e.getMessage());
         }
