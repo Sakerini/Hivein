@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -70,6 +71,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         HashSet<Authority> authorities = new HashSet<>();
         authorities.add(role);
+        Instant instant = Instant.now();
+        user.setCreatedAt(instant);
+        user.setUpdatedAt(instant);
         user.setRoles(authorities);
 
         return userRepository.save(user);

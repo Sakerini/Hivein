@@ -8,11 +8,12 @@ import javax.persistence.*;
 @Setter
 @Table(name = "authorities")
 @Entity
+@NoArgsConstructor
 public class Authority {
     public final static String USER = "USER";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long authority_id;
 
     @ManyToOne
