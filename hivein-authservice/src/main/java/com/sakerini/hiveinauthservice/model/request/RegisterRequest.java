@@ -1,15 +1,18 @@
-package com.sakerini.hiveinauthservice.entity;
+package com.sakerini.hiveinauthservice.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class RegisterRequest {
+
+    private String name;
     private String username;
-    private String role;
+    private String email;
+    private String password;
 }

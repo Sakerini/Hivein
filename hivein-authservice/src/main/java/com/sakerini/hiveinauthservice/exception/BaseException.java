@@ -1,16 +1,16 @@
-package com.sakerini.hiveinauthservice.entity.request;
+package com.sakerini.hiveinauthservice.exception;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
-
-    private String username;
-    private String password;
+public class BaseException extends Exception {
+    private String code;
+    private String message;
 }

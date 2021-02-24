@@ -1,4 +1,4 @@
-package com.sakerini.hiveinauthservice.entity.request;
+package com.sakerini.hiveinauthservice.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,8 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class LoginRequest {
 
-    private String name;
     private String username;
-    private String email;
     private String password;
 }

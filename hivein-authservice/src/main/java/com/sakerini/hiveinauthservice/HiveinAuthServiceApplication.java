@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HiveinAuthserviceApplication {
+public class HiveinAuthServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HiveinAuthserviceApplication.class, args);
+        SpringApplication.run(HiveinAuthServiceApplication.class, args);
     }
 
 }

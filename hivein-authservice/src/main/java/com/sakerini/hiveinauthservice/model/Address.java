@@ -1,4 +1,4 @@
-package com.sakerini.hiveinauthservice.entity;
+package com.sakerini.hiveinauthservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
