@@ -1,6 +1,6 @@
 package com.sakerini.hiveinauthservice.repository;
 
-import com.sakerini.hiveinauthservice.model.User;
+import com.sakerini.hiveinauthservice.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

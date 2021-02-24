@@ -1,7 +1,7 @@
 package com.sakerini.hiveinauthservice.service.impl;
 
 import com.sakerini.hiveinauthservice.model.AuthUserDetails;
-import com.sakerini.hiveinauthservice.model.User;
+import com.sakerini.hiveinauthservice.model.entity.User;
 import com.sakerini.hiveinauthservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

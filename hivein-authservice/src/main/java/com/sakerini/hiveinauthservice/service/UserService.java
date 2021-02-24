@@ -1,8 +1,8 @@
 package com.sakerini.hiveinauthservice.service;
 
 import com.sakerini.hiveinauthservice.exception.BaseException;
-import com.sakerini.hiveinauthservice.model.Authority;
-import com.sakerini.hiveinauthservice.model.User;
+import com.sakerini.hiveinauthservice.model.entity.Authority;
+import com.sakerini.hiveinauthservice.model.entity.User;
 
 import java.util.List;
 import java.util.Optional;

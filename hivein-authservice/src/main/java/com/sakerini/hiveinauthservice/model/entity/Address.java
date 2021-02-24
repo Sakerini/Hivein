@@ -1,4 +1,4 @@
-package com.sakerini.hiveinauthservice.model;
+package com.sakerini.hiveinauthservice.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

@@ -1,6 +1,8 @@
-package com.sakerini.hiveinauthservice.model;
+package com.sakerini.hiveinauthservice.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sakerini.hiveinauthservice.model.entity.Authority;
+import com.sakerini.hiveinauthservice.model.entity.Profile;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

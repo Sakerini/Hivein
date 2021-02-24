@@ -1,4 +1,4 @@
-package com.sakerini.hiveinauthservice.model;
+package com.sakerini.hiveinauthservice.model.entity;
 
 import lombok.*;
 
@@ -22,8 +22,11 @@ public class Profile {
     @NotNull
     private String displayName;
     private String profilePictureUrl;
+
+    @NotNull
     private Date birthday;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;

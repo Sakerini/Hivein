@@ -48,14 +48,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable().and()
                 .cors().and()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/signin").permitAll()
-                .antMatchers(HttpMethod.POST, "/signup").permitAll()
                 .anyRequest().permitAll();
+                //.anyRequest().hasIpadress();
     }
 
     @Bean

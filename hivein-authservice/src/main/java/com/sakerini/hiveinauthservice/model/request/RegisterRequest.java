@@ -1,6 +1,6 @@
 package com.sakerini.hiveinauthservice.model.request;
 
-import com.sakerini.hiveinauthservice.model.Address;
+import com.sakerini.hiveinauthservice.model.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
