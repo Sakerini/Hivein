@@ -1,12 +1,16 @@
 package com.sakerini.hiveinauthservice.controller;
 
+import com.sakerini.hiveinauthservice.exception.BadRequestException;
+import com.sakerini.hiveinauthservice.exception.BaseException;
+import com.sakerini.hiveinauthservice.model.Profile;
+import com.sakerini.hiveinauthservice.model.Role;
 import com.sakerini.hiveinauthservice.model.User;
 import com.sakerini.hiveinauthservice.model.request.LoginRequest;
 import com.sakerini.hiveinauthservice.model.request.RegisterRequest;
+import com.sakerini.hiveinauthservice.model.response.RegisterResponse;
 import com.sakerini.hiveinauthservice.model.response.TokenResponse;
 import com.sakerini.hiveinauthservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,9 +36,27 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) throws BadRequestException {
         log.info("Inside AuthController in /auth/signup method");
 
-        return null;
+        User user = User.builder()
+                .username(registerRequest.getUsername())
+                .email(registerRequest.getEmail())
+                .password(registerRequest.getPassword())
+                .userProfile(
+                        Profile
+                                .builder()
+                                .displayName(registerRequest.getName())
+                                .profilePictureUrl("NULL")
+                                .build())
+                .build();
+
+        try {
+            userService.registerUser(user, new Role(Role.USER));
+        } catch (BaseException e) {
+            throw new BadRequestException("code-400", e.getMessage());
+        }
+
+        return ResponseEntity.ok(new RegisterResponse("User registered successfully"));
     }
 }
