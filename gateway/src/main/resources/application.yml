@@ -5,3 +5,16 @@ spring:
   application:
     name: ${APP_NAME:api-gateway}
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    instance:
+      hostname: ${HOSTNAME:localhost}
+
+zuul:
+  routes:
+    auth:
+      url: ${AUTH_SERVICE:http://localhost:5000}
