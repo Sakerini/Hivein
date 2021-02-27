@@ -6,12 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
+import java.net.ConnectException;
 
 @Slf4j
 @ControllerAdvice
@@ -45,6 +48,33 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
                 "code-400",
                 "Illegal argument exception"),
                 HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    protected ResponseEntity<ErrorResponse> handleConc(ConnectException ex, WebRequest request) {
+        log.error("Error ConstraintViolation");
+        return new ResponseEntity<>(new ErrorResponse(
+                "code-408",
+                "Connection Exception"),
+                HttpStatus.REQUEST_TIMEOUT);
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    protected ResponseEntity<ErrorResponse> handleConc(DisabledException ex, WebRequest request) {
+        log.error("Error DisabledException");
+        return new ResponseEntity<>(new ErrorResponse(
+                "code-403",
+                "ACCOUNT IS NOT ACTIVATED"),
+                HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    protected ResponseEntity<ErrorResponse> handleConc(InternalAuthenticationServiceException ex, WebRequest request) {
+        log.error("Error USER unknown");
+        return new ResponseEntity<>(new ErrorResponse(
+                "code-401",
+                "USER UNKNOWN"),
+                HttpStatus.UNAUTHORIZED);
     }
 
 

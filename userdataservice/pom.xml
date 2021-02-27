@@ -12,7 +12,7 @@
     <artifactId>userdataservice</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
-    <name>authservice</name>
+    <name>userdataservice</name>
     <description>HiveIn User Data Service</description>
     <properties>
         <java.version>11</java.version>

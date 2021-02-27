@@ -1,6 +1,8 @@
 package com.hivein.userdataservice.controller;
 
 import com.hivein.userdataservice.exception.UsernameNotFoundException;
+import com.hivein.userdataservice.model.dto.RoleDTO;
+import com.hivein.userdataservice.model.entity.Authority;
 import com.hivein.userdataservice.model.entity.User;
 import com.hivein.userdataservice.model.response.AuthInformationResponse;
 import com.hivein.userdataservice.service.UserService;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -38,9 +42,14 @@ public class UserDataController {
         }
 
         User user = optionalUser.get();
+        Set<RoleDTO> userRoles = new HashSet<>();
+
+        for(Authority role: user.getRoles()) {
+            userRoles.add(new RoleDTO(role.getUser().getUsername(), role.getRole()));
+        }
 
         AuthInformationResponse response =
-                new AuthInformationResponse(user.getUsername(), user.getPassword(), user.isActive());
+                new AuthInformationResponse(user.getUsername(), user.getPassword(), user.isActive(), userRoles);
 
         return ResponseEntity.ok(response);
     }

@@ -1,27 +1,24 @@
-package com.hivein.userdataservice.model.response;
+package com.hivein.authservice.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hivein.userdataservice.model.dto.RoleDTO;
+import com.hivein.authservice.model.dto.RoleDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
-public class AuthInformationResponse {
+public class LoginInfoResponse {
 
     @JsonProperty("username")
     private String username;
-
     @JsonProperty("password")
     private String password;
-
     @JsonProperty("active")
     private boolean active;
-
     @JsonProperty("roles")
     private Set<RoleDTO> roles;
 }
