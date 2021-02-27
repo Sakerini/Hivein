@@ -22,7 +22,16 @@ public class VerifyController {
     }
 
     @DeleteMapping("/email/{token}")
-    public ResponseEntity<?> verifyToken(@PathVariable(name = "token") String token) {
+    public ResponseEntity<?> verifyEmail(@PathVariable(name = "token") String token) {
+        return verifyToken(token);
+    }
+
+    @DeleteMapping("/password/{token}")
+    public ResponseEntity<?> verifyPasswordRetrieve(@PathVariable(name = "token") String token) {
+        return verifyToken(token);
+    }
+
+    private ResponseEntity<?> verifyToken(String token) {
         log.info("Verifying Token");
         if (!jwtService.validateToken(token)) {
             log.error("token " + token + " is invalid");
