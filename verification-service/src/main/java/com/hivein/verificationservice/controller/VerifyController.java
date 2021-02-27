@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -24,7 +21,7 @@ public class VerifyController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping("/email/{token}")
+    @DeleteMapping("/email/{token}")
     public ResponseEntity<?> verifyToken(@PathVariable(name = "token") String token) {
         log.info("Verifying Token");
         if (!jwtService.validateToken(token)) {
@@ -32,6 +29,7 @@ public class VerifyController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("code-401", "Invalid token"));
         } else {
             log.info("token " + token + " is verified");
+
             return ResponseEntity.ok().body(new BasicResponse("code-200", "Token is verified"));
         }
     }

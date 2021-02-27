@@ -35,4 +35,9 @@ public class SecureTokenServiceImpl implements SecureTokenService {
     public SecureToken saveToken(SecureToken token) {
         return secureTokenRepository.save(token);
     }
+
+    @Override
+    public void deleteById(long id) {
+        secureTokenRepository.deleteById(id);
+    }
 }

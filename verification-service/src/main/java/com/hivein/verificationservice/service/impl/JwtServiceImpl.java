@@ -66,6 +66,8 @@ public class JwtServiceImpl implements JwtService {
             if (id != tokenRecord.get().getId()) {
                 throw new MalformedJwtException("Invalid Token");
             }
+
+            secureTokenService.deleteById(id);
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");

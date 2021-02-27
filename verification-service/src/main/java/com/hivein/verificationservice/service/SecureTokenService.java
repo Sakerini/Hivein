@@ -9,5 +9,5 @@ public interface SecureTokenService {
     List<SecureToken> findAllTokens();
     Optional<SecureToken> findTokenByEmail(String email);
     SecureToken saveToken(SecureToken token);
-
+    void deleteById(long id);
 }
