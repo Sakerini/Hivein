@@ -3,7 +3,7 @@ package com.hivein.verificationservice.service;
 import io.jsonwebtoken.Claims;
 
 public interface JwtService {
-    String generateToken(String email, int id);
+    String generateToken(String email, long id);
     Claims getClaimByToken(String token);
     boolean validateToken(String token);
 }

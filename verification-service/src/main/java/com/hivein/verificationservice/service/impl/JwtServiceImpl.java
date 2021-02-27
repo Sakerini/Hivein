@@ -1,32 +1,38 @@
 package com.hivein.verificationservice.service.impl;
 
 import com.hivein.verificationservice.config.JwtConfig;
+import com.hivein.verificationservice.model.entity.SecureToken;
 import com.hivein.verificationservice.service.JwtService;
+import com.hivein.verificationservice.service.SecureTokenService;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class JwtServiceImpl implements JwtService {
 
     private final JwtConfig jwtConfig;
+    private final SecureTokenService secureTokenService;
 
     @Autowired
-    public JwtServiceImpl(JwtConfig jwtConfig) {
+    public JwtServiceImpl(JwtConfig jwtConfig, SecureTokenService secureTokenService) {
         this.jwtConfig = jwtConfig;
+        this.secureTokenService = secureTokenService;
     }
 
     @Override
-    public String generateToken(String email, int id) {
+    public String generateToken(String email, long id) {
         log.info("Generating token... Jwt Service");
 
         Long timeNow = System.currentTimeMillis();
 
         return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
                 .setSubject(email)
                 .claim("id", id)
                 .setIssuedAt(new Date(timeNow))
@@ -48,9 +54,18 @@ public class JwtServiceImpl implements JwtService {
     public boolean validateToken(String token) {
         log.info("Validating token JWTService");
         try {
-            Jwts.parser()
+            Jws<Claims> claims = Jwts.parser()
                     .setSigningKey(jwtConfig.getSecret().getBytes())
                     .parseClaimsJws(token);
+            long id = Long.parseLong(claims.getBody().get("id").toString());
+            String email = claims.getBody().getSubject();
+            Optional<SecureToken> tokenRecord = secureTokenService.findTokenByEmail(email);
+            if (!tokenRecord.isPresent()) {
+                throw new MalformedJwtException("Invalid Token");
+            }
+            if (id != tokenRecord.get().getId()) {
+                throw new MalformedJwtException("Invalid Token");
+            }
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");
