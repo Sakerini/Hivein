@@ -23,11 +23,13 @@ public class VerifyController {
 
     @DeleteMapping("/email/{token}")
     public ResponseEntity<?> verifyEmail(@PathVariable(name = "token") String token) {
+        log.info("Email Verification Token");
         return verifyToken(token);
     }
 
     @DeleteMapping("/password/{token}")
     public ResponseEntity<?> verifyPasswordRetrieve(@PathVariable(name = "token") String token) {
+        log.info("Password Retrieve Token");
         return verifyToken(token);
     }
 
