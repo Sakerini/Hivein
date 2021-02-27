@@ -8,8 +8,14 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class RegisterResponse {
+public class AuthInformationResponse {
 
-    @JsonProperty("message")
-    private String message;
+    @JsonProperty("username")
+    private String username;
+
+    @JsonProperty("password")
+    private String password;
+
+    @JsonProperty("active")
+    private boolean active;
 }
