@@ -39,6 +39,4 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
                 "Illegal argument exception"),
                 HttpStatus.BAD_REQUEST);
     }
-
-
 }
