@@ -47,10 +47,5 @@ public class EmailSendRequestController {
         log.info("Generated token saved");
         verificationService.sendVerification(tokenRecord);
         return ResponseEntity.ok(new BasicResponse(StatusCodes.OK.getCode(), "Email sent"));
-        /**
-         * TODO:
-         * 3. Create Url + token
-         * 4. Send EMAIL
-         */
     }
 }
