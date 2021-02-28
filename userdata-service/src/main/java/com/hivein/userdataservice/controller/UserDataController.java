@@ -6,6 +6,7 @@ import com.hivein.userdataservice.model.entity.Authority;
 import com.hivein.userdataservice.model.entity.User;
 import com.hivein.userdataservice.model.response.AuthInformationResponse;
 import com.hivein.userdataservice.service.UserService;
+import com.hivein.userdataservice.util.StatusCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,20 +32,20 @@ public class UserDataController {
     }
 
     @GetMapping("/get-authinfo/{username}")
-    public ResponseEntity<?> getUserByUsername(
+    public ResponseEntity<?> getUserAuthInfo(
             @PathVariable(name = "username") String username) throws UsernameNotFoundException {
         log.info("Inside UserDataController getting user authentication information ${}", username);
 
         Optional<User> optionalUser = userService.findByUsername(username);
         if (!optionalUser.isPresent()) {
-            log.error("ERROR: GetAuth info Username not found ${]", username);
-            throw new UsernameNotFoundException("code-404", "Username not found");
+            log.error("ERROR: GetAuth info Username not found " + username);
+            throw new UsernameNotFoundException(StatusCodes.NOT_FOUND.getCode(), "Username not found");
         }
 
         User user = optionalUser.get();
         Set<RoleDTO> userRoles = new HashSet<>();
 
-        for(Authority role: user.getRoles()) {
+        for (Authority role : user.getRoles()) {
             userRoles.add(new RoleDTO(role.getUser().getUsername(), role.getRole()));
         }
 

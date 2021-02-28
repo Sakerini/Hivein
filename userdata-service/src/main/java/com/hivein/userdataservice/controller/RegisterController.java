@@ -7,6 +7,7 @@ import com.hivein.userdataservice.model.entity.User;
 import com.hivein.userdataservice.model.request.RegisterRequest;
 import com.hivein.userdataservice.model.response.RegisterResponse;
 import com.hivein.userdataservice.service.RegisterService;
+import com.hivein.userdataservice.util.StatusCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,9 +47,11 @@ public class RegisterController {
             registerService.registerUser(user, new Authority(user, Authority.USER));
         } catch (BaseException e) {
 
-            throw new BaseException("code-400", e.getMessage());
+            throw new BaseException(StatusCodes.BAD_REQUEST.getCode(), e.getMessage());
         }
 
-        return ResponseEntity.ok(new RegisterResponse("User registered successfully"));
+        return ResponseEntity.ok(
+                new RegisterResponse(StatusCodes.OK.getCode(), "User registered successfully")
+        );
     }
 }

@@ -16,6 +16,8 @@ public class SecureToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     private String email;
     private String token;
+    private String state;
 }

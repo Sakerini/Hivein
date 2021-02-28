@@ -2,6 +2,7 @@ package com.hivein.userdataservice.controller;
 
 import com.hivein.userdataservice.exception.BaseException;
 import com.hivein.userdataservice.model.response.ErrorResponse;
+import com.hivein.userdataservice.util.StatusCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleConc(ConstraintViolationException ex, WebRequest request) {
         log.error("Error ConstraintViolation");
         return new ResponseEntity<>(new ErrorResponse(
-                "code-400",
+                StatusCodes.BAD_REQUEST.getCode(),
                 "Violated Constraints"),
                 HttpStatus.BAD_REQUEST);
     }
@@ -35,7 +36,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleConc(IllegalArgumentException ex, WebRequest request) {
         log.error("Error ConstraintViolation");
         return new ResponseEntity<>(new ErrorResponse(
-                "code-400",
+                StatusCodes.BAD_REQUEST.getCode(),
                 "Illegal argument exception"),
                 HttpStatus.BAD_REQUEST);
     }

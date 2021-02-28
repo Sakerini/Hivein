@@ -1,5 +1,5 @@
 server:
-  port: 5020
+  port: 5025
 
 spring:
   application:
@@ -11,6 +11,21 @@ spring:
     password: 1234
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+  mail:
+    host: ${SMTP:smtp.gmail.com}
+    port: ${PORT:587}
+    username: chat.hivein@gmail.com
+    password:
+    protocol: smtp
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+
+site:
+  base:
+    url:
+      https: ${SITE_URL:http://localhost:8080}
 
 security:
   jwt:

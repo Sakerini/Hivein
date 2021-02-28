@@ -17,6 +17,18 @@ spring:
       name: admin
       password: admin
 
+feign:
+  client:
+    config:
+      default:
+        readTimeout: 1500
+        connectTimeout: 500
+verificationService:
+  service:
+    base:
+      url: ${VERIFICATION_URL:http://localhost:5025}
+    name: ${VERIFICATION_NAME:verificationService}
+
 eureka:
   client:
     register-with-eureka: false

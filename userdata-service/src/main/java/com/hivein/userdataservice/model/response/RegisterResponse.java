@@ -1,15 +1,13 @@
 package com.hivein.userdataservice.model.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-@AllArgsConstructor
-public class RegisterResponse {
+@Setter
+public class RegisterResponse extends BaseResponse {
 
-    @JsonProperty("message")
-    private String message;
+    public RegisterResponse(String code, String message) {
+        super(code, message);
+    }
 }
