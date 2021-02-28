@@ -11,10 +11,7 @@ import io.jsonwebtoken.Jws;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -51,14 +48,23 @@ public class VerifyController {
         );
     }
 
-    /*
-    @DeleteMapping("/password/{token}")
-    public ResponseEntity<?> verifyPasswordRetrieve(@PathVariable(name = "token") String token) {
+    @DeleteMapping("/password/{token}/")
+    public ResponseEntity<?> verifyPasswordRetrieve(
+            @PathVariable(name = "token") String token,
+            @RequestParam(name = "username") String name,
+            @RequestParam(name = "password") String password) {
         log.info("Password Retrieve Token");
-        return verifyToken(token);
-    }
+        if (!verifyToken(token)) {
+            return ResponseEntity.status(401).body(
+                    new ErrorResponse(StatusCodes.UNAUTHORIZED.getCode(), "Token invalid")
+            );
+        }
+        dataService.changePassword(name, password);
 
-     */
+        return ResponseEntity.ok(
+                new BasicResponse(StatusCodes.OK.getCode(), "Password Changed")
+        );
+    }
 
     private boolean verifyToken(String token) {
         log.info("Verifying Token");

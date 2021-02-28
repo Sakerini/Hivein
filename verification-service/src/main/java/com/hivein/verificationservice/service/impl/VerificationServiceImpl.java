@@ -1,6 +1,7 @@
 package com.hivein.verificationservice.service.impl;
 
 import com.hivein.verificationservice.model.email.AccountVerificationEmailContext;
+import com.hivein.verificationservice.model.email.ForgotPasswordEmailContext;
 import com.hivein.verificationservice.model.entity.SecureToken;
 import com.hivein.verificationservice.service.EmailService;
 import com.hivein.verificationservice.service.VerificationService;
@@ -30,6 +31,18 @@ public class VerificationServiceImpl implements VerificationService {
         log.info("sending verification info");
 
         AccountVerificationEmailContext context = new AccountVerificationEmailContext();
+        context.init(verificationInformation);
+        context.setToken(verificationInformation.getToken());
+        context.buildVerificationUrl(baseURL, verificationInformation.getToken());
+
+        emailService.sendMail(context);
+    }
+
+    @Override
+    public void sendPasswordChangeVerification(SecureToken verificationInformation) throws MessagingException {
+        log.info("sending password change verification email");
+
+        ForgotPasswordEmailContext context = new ForgotPasswordEmailContext();
         context.init(verificationInformation);
         context.setToken(verificationInformation.getToken());
         context.buildVerificationUrl(baseURL, verificationInformation.getToken());

@@ -12,6 +12,7 @@ import com.hivein.userdataservice.util.StatusCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -24,10 +25,12 @@ import java.util.Set;
 public class UserDataController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserDataController(UserService userService) {
+    public UserDataController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PutMapping("/activate/{email}")
@@ -66,5 +69,21 @@ public class UserDataController {
                 new AuthInformationResponse(user.getUsername(), user.getPassword(), user.isActive(), userRoles);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/change-password/")
+    public ResponseEntity<?> changeUsersPassword(
+            @RequestParam(name = "username") String username, @RequestParam(name = "password") String password)
+            throws UsernameNotFoundException {
+        Optional<User> userOptional = userService.findByUsername(username);
+        if (!userOptional.isPresent()) {
+            log.error("ERROR: Changing password failed username not found " + username);
+            throw new UsernameNotFoundException(StatusCodes.NOT_FOUND.getCode(), "Username not found");
+        }
+
+        User user = userOptional.get();
+        user.setPassword(passwordEncoder.encode(password));
+        userService.saveUser(user);
+        return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "Password changed"));
     }
 }

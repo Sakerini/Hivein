@@ -21,4 +21,9 @@ public class DataServiceImpl implements DataService {
     public void activateEmail(String email) {
         dataServiceApi.activateEmail(email);
     }
+
+    @Override
+    public void changePassword(String username, String password) {
+        dataServiceApi.changePassword(username, password);
+    }
 }

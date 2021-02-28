@@ -48,4 +48,24 @@ public class EmailSendRequestController {
         verificationService.sendVerification(tokenRecord);
         return ResponseEntity.ok(new BasicResponse(StatusCodes.OK.getCode(), "Email sent"));
     }
+
+    @PostMapping("/password-change-email")
+    public ResponseEntity<?> sendChangePasswordEmail(
+        @RequestParam(name = "name") String name, @RequestParam(name = "email") String email
+    ) throws MessagingException {
+        SecureToken tokenRecord = SecureToken.builder()
+                .name(name)
+                .email(email)
+                .state(VerificationStates.PASSWORD.getState())
+                .build();
+
+        secureTokenService.saveToken(tokenRecord);
+        tokenRecord = secureTokenService.findTokenByEmail(email).get();
+        String token = jwtService.generateToken(email, tokenRecord.getId());
+        tokenRecord.setToken(token);
+        secureTokenService.saveToken(tokenRecord);
+        log.info("Generated token saved");
+        verificationService.sendPasswordChangeVerification(tokenRecord);
+        return ResponseEntity.ok(new BasicResponse(StatusCodes.OK.getCode(), "Email sent"));
+    }
 }

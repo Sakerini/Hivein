@@ -6,4 +6,6 @@ import javax.mail.MessagingException;
 
 public interface VerificationService {
     void sendVerification(SecureToken verificationInformation) throws MessagingException;
+
+    void sendPasswordChangeVerification(SecureToken verificationInformation) throws MessagingException;
 }
