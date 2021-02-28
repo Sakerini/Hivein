@@ -2,7 +2,6 @@ package com.hivein.verificationservice.service.impl;
 
 import com.hivein.verificationservice.config.JwtConfig;
 import com.hivein.verificationservice.model.entity.SecureToken;
-import com.hivein.verificationservice.service.DataService;
 import com.hivein.verificationservice.service.JwtService;
 import com.hivein.verificationservice.service.SecureTokenService;
 import io.jsonwebtoken.*;
@@ -19,13 +18,11 @@ public class JwtServiceImpl implements JwtService {
 
     private final JwtConfig jwtConfig;
     private final SecureTokenService secureTokenService;
-    private final DataService dataService;
 
     @Autowired
-    public JwtServiceImpl(JwtConfig jwtConfig, SecureTokenService secureTokenService, DataService dataService) {
+    public JwtServiceImpl(JwtConfig jwtConfig, SecureTokenService secureTokenService) {
         this.jwtConfig = jwtConfig;
         this.secureTokenService = secureTokenService;
-        this.dataService = dataService;
     }
 
     @Override
@@ -45,16 +42,15 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public Claims getClaimByToken(String token) {
+    public Jws<Claims> getClaimByToken(String token) {
         log.info("Inside Jwt Service getClaimByToken");
         return Jwts.parser()
                 .setSigningKey(jwtConfig.getSecret().getBytes())
-                .parseClaimsJws(token)
-                .getBody();
+                .parseClaimsJws(token);
     }
 
     @Override
-    public boolean validateTokenAndActivateEmail(String token) {
+    public boolean validateToken(String token) {
         log.info("Validating token JWTService");
         try {
             Jws<Claims> claims = Jwts.parser()
@@ -70,8 +66,8 @@ public class JwtServiceImpl implements JwtService {
                 throw new MalformedJwtException("Invalid Token");
             }
 
-            dataService.activateEmail(email);
-            secureTokenService.deleteById(id);
+           // dataService.activateEmail(email);
+            // secureTokenService.deleteById(id);
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");

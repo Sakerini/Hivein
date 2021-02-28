@@ -38,11 +38,11 @@ feign:
       default:
         readTimeout: 1500
         connectTimeout: 500
-dataSource:
+userData:
   service:
     base:
       url: ${SERVICE_URL:http://localhost:5020}
-    name: ${SERVICE_NAME:dataSource}
+    name: ${SERVICE_NAME:userData}
 
 eureka:
   client:

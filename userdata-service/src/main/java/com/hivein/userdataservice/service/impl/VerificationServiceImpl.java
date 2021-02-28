@@ -21,8 +21,8 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public void sendVerificationEmail(String email) throws EmailNotSentException {
-        BaseResponse response = serviceApi.sendVerificationEmail(email);
+    public void sendVerificationEmail(String greetingName, String email) throws EmailNotSentException {
+        BaseResponse response = serviceApi.sendVerificationEmail(greetingName, email);
         if (!response.getCode().equals(StatusCodes.OK.getCode())){
             throw new EmailNotSentException(StatusCodes.INTERNAL_ERROR.getCode() , "Email not sent");
         }

@@ -60,6 +60,6 @@ public class RegisterServiceImpl implements RegisterService {
         user.setUpdatedAt(instant);
         user.setRoles(authorities);
         userService.saveUser(user);
-        verificationService.sendVerificationEmail(user.getEmail());
+        verificationService.sendVerificationEmail(user.getUserProfile().getDisplayName(), user.getEmail());
     }
 }

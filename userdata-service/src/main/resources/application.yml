@@ -21,8 +21,8 @@ feign:
   client:
     config:
       default:
-        readTimeout: 1500
-        connectTimeout: 500
+        readTimeout: 15000
+        connectTimeout: 1500
 verificationService:
   service:
     base:
