@@ -32,6 +32,18 @@ security:
     expiration: ${TOKEN_EXPIRATION:3600}
     secret: ${JWT_SECRET:JwtSecretKey}
 
+feign:
+  client:
+    config:
+      default:
+        readTimeout: 1500
+        connectTimeout: 500
+dataSource:
+  service:
+    base:
+      url: ${SERVICE_URL:http://localhost:5020}
+    name: ${SERVICE_NAME:dataSource}
+
 eureka:
   client:
     register-with-eureka: false
