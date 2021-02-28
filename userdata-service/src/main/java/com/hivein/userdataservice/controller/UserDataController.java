@@ -1,19 +1,18 @@
 package com.hivein.userdataservice.controller;
 
+import com.hivein.userdataservice.exception.EmailNotFoundException;
 import com.hivein.userdataservice.exception.UsernameNotFoundException;
 import com.hivein.userdataservice.model.dto.RoleDTO;
 import com.hivein.userdataservice.model.entity.Authority;
 import com.hivein.userdataservice.model.entity.User;
 import com.hivein.userdataservice.model.response.AuthInformationResponse;
+import com.hivein.userdataservice.model.response.BaseResponse;
 import com.hivein.userdataservice.service.UserService;
 import com.hivein.userdataservice.util.StatusCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -29,6 +28,20 @@ public class UserDataController {
     @Autowired
     public UserDataController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PutMapping("/activate/{email}")
+    public ResponseEntity<?> activateAccount(@PathVariable(name = "email") String email) throws EmailNotFoundException {
+        Optional<User> userOptional = userService.findByEmail(email);
+        if (!userOptional.isPresent()) {
+            log.error("ERROR: Activating account Email not found " + email);
+            throw new EmailNotFoundException(StatusCodes.NOT_FOUND.getCode(), "Email not found");
+        }
+
+        User user = userOptional.get();
+        user.setActive(true);
+        userService.saveUser(user);
+        return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "User activated"));
     }
 
     @GetMapping("/get-authinfo/{username}")
