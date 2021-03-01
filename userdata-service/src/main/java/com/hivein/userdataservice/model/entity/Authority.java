@@ -3,6 +3,7 @@ package com.hivein.userdataservice.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public class Authority {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    @NotNull
     private String role;
 
     public Authority(User user, String role) {

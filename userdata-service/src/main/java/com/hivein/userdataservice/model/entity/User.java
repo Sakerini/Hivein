@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
@@ -25,19 +26,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank
+    @NotNull
     @Size(max = 15)
     @JsonIgnore
+    @Column(unique = true)
     private String username;
 
-    @NotBlank
+    @NotNull
     @Size(max = 80)
     @JsonIgnore
     private String password;
 
-    @NotBlank
+    @NotNull
     @Size(max = 40)
     @Email
+    @Column(unique = true)
     private String email;
 
     @CreatedDate
@@ -48,10 +51,12 @@ public class User {
 
     private boolean active;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private Profile userProfile;
 
+    @NotNull
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private Set<Authority> roles;
 }
