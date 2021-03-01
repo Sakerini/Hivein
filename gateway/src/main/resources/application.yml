@@ -15,13 +15,20 @@ eureka:
       hostname: ${HOSTNAME:localhost}
 
 zuul:
+  sensitive-headers: Cookie,Set-Cookie
   routes:
     auth:
       url: ${AUTH_SERVICE:http://localhost:5000}
-    user-data:
-      url: ${USER_DATA_SERVICE:http://localhost:5020}
+    user:
+      url: ${USER_SERVICE:http://localhost:5020}
     verification:
       url: ${VERIFICATION_SERVICE:http://localhost:5025}
   host:
     connect-timeout-millis: 3000
     socket-timeout-millis: 5000
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: JwtSecretKey
