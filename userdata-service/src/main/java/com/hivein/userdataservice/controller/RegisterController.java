@@ -36,7 +36,9 @@ public class RegisterController {
                 .userProfile(
                         Profile
                                 .builder()
-                                .displayName(registerRequest.getName())
+                                .displayName(registerRequest.getDisplayName())
+                                .firstName(registerRequest.getFirstName())
+                                .lastName(registerRequest.getLastName())
                                 .profilePictureUrl("NULL")
                                 .birthday(registerRequest.getBirthDay())
                                 .address(registerRequest.getAddress())

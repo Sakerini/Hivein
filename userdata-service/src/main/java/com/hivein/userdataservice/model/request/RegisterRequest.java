@@ -14,10 +14,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class RegisterRequest {
 
-    private String name;
     private String username;
     private String email;
     private String password;
+    private String displayName;
+    private String firstName;
+    private String lastName;
     private Date birthDay;
     private Address address;
 }
