@@ -25,7 +25,7 @@ spring:
 site:
   base:
     url:
-      https: ${SITE_URL:http://localhost:8080}
+      https: ${SITE_URL:https://hivein.herokuapp.com/}
 
 security:
   jwt:
@@ -36,8 +36,8 @@ feign:
   client:
     config:
       default:
-        readTimeout: 1500
-        connectTimeout: 500
+        readTimeout: 15000
+        connectTimeout: 5000
 userData:
   service:
     base:
