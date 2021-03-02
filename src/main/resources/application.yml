@@ -20,9 +20,9 @@ zuul:
     auth:
       url: ${AUTH_SERVICE:http://localhost:5000}
     user:
-      url: ${USER_SERVICE:http://localhost:5020}
+      url: ${USER_SERVICE:https://hivein-userdata.herokuapp.com/}
     verification:
-      url: ${VERIFICATION_SERVICE:http://localhost:5025}
+      url: ${VERIFICATION_SERVICE:https://hivein-verification.herokuapp.com/}
   host:
     connect-timeout-millis: 3000
     socket-timeout-millis: 5000
