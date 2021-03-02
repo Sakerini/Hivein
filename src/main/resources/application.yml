@@ -32,10 +32,10 @@ verificationService:
 
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_URI:https://hivein-registry.herokuapp.com/eureka}
     instance:
-      hostname: ${HOSTNAME:localhost}
+      hostname: ${HOSTNAME:hivein-registry}
 
