@@ -27,7 +27,7 @@ feign:
 verificationService:
   service:
     base:
-      url: ${VERIFICATION_URL:http://localhost:5025}
+      url: ${VERIFICATION_URL:https://hivein-verification.herokuapp.com}
     name: ${VERIFICATION_NAME:verificationService}
 
 eureka:
