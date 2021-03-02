@@ -17,6 +17,8 @@ public class GatewaySecurityConfiguration extends ResourceServerConfigurerAdapte
                 .permitAll()
                 .antMatchers("/user/signup")
                 .permitAll()
+                .antMatchers("/verification/verify/**")
+                .permitAll()
                 .antMatchers("/**")
                 .authenticated();
     }
