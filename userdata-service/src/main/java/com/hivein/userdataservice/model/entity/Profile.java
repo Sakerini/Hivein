@@ -31,7 +31,7 @@ public class Profile {
     private Date birthday;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_fk")
     private Address address;
 }

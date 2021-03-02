@@ -22,7 +22,8 @@ public class Address {
     private String country;
     @NotNull
     private String city;
-    private String zipCode;
+
+    private int zipCode;
 
     @JsonProperty("street")
     private String streetName;

@@ -17,9 +17,11 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long authority_id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
+
     @NotNull
     private String role;
 

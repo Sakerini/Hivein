@@ -1,6 +1,7 @@
 package com.hivein.userdataservice.controller;
 
 import com.hivein.userdataservice.exception.BaseException;
+import com.hivein.userdataservice.model.entity.Address;
 import com.hivein.userdataservice.model.entity.Authority;
 import com.hivein.userdataservice.model.entity.Profile;
 import com.hivein.userdataservice.model.entity.User;

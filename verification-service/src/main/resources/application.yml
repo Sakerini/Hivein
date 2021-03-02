@@ -15,7 +15,7 @@ spring:
     host: ${SMTP:smtp.gmail.com}
     port: ${PORT:587}
     username: chat.hivein@gmail.com
-    password:
+    password: cfhqzucqsffxtuly
     protocol: smtp
     properties.mail.smtp:
       auth: true
