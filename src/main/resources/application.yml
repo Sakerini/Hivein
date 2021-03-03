@@ -20,7 +20,7 @@ zuul:
     auth:
       url: ${AUTH_SERVICE:https://hivein-authentication.herokuapp.com/}
     user:
-      url: ${USER_SERVICE:https://hivein-userdata.herokuapp.com/}
+      url: ${USER_SERVICE:https://hivein-userdata.herokuapp.com/user}
     verification:
       url: ${VERIFICATION_SERVICE:https://hivein-verification.herokuapp.com/}
   host:
