@@ -10,7 +10,7 @@ security:
     header: Authorization
     prefix: Bearer
     expiration: 86400
-    secret: JwtSecretKey
+    secret: hubabubamarakuya
 
 spring:
   application:
@@ -26,20 +26,20 @@ feign:
   client:
     config:
       default:
-        readTimeout: 1500
-        connectTimeout: 500
+        readTimeout: 15000
+        connectTimeout: 5000
 userData:
   service:
     base:
-      url: http://localhost:5020
+      url: https://hivein-userdata.herokuapp.com/
     name: userData
 
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_URI:https://hivein-registry.herokuapp.com/eureka}
     instance:
-      hostname: ${HOSTNAME:localhost}
+      hostname: ${HOSTNAME:hivein-registry}
 

@@ -2,6 +2,7 @@ package com.hivein.authservice.controller;
 
 import com.hivein.authservice.exception.BaseException;
 import com.hivein.authservice.model.response.ErrorResponse;
+import com.hivein.authservice.util.StatusCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +30,14 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     protected ResponseEntity<ErrorResponse> handleConc(BadCredentialsException ex, WebRequest request) {
         log.error("Error Bad Credentials");
-        return new ResponseEntity<>(new ErrorResponse("code-400", ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(StatusCodes.BAD_REQUEST.getCode(), ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<ErrorResponse> handleConc(ConstraintViolationException ex, WebRequest request) {
         log.error("Error ConstraintViolation");
         return new ResponseEntity<>(new ErrorResponse(
-                "code-400",
+                StatusCodes.BAD_REQUEST.getCode(),
                 "Violated Constraints"),
                 HttpStatus.BAD_REQUEST);
     }
@@ -45,7 +46,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleConc(IllegalArgumentException ex, WebRequest request) {
         log.error("Error ConstraintViolation");
         return new ResponseEntity<>(new ErrorResponse(
-                "code-400",
+                StatusCodes.BAD_REQUEST.getCode(),
                 "Illegal argument exception"),
                 HttpStatus.BAD_REQUEST);
     }
@@ -54,7 +55,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleConc(ConnectException ex, WebRequest request) {
         log.error("Error ConstraintViolation");
         return new ResponseEntity<>(new ErrorResponse(
-                "code-408",
+                StatusCodes.REQUEST_TIMEOUT.getCode(),
                 "Connection Exception"),
                 HttpStatus.REQUEST_TIMEOUT);
     }
@@ -63,7 +64,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleConc(DisabledException ex, WebRequest request) {
         log.error("Error DisabledException");
         return new ResponseEntity<>(new ErrorResponse(
-                "code-403",
+                StatusCodes.FORBIDDEN.getCode(),
                 "ACCOUNT IS NOT ACTIVATED"),
                 HttpStatus.FORBIDDEN);
     }
@@ -72,7 +73,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleConc(InternalAuthenticationServiceException ex, WebRequest request) {
         log.error("Error USER unknown");
         return new ResponseEntity<>(new ErrorResponse(
-                "code-401",
+                StatusCodes.UNAUTHORIZED.getCode(),
                 "USER UNKNOWN"),
                 HttpStatus.UNAUTHORIZED);
     }

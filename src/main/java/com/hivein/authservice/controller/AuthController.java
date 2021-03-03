@@ -1,6 +1,5 @@
 package com.hivein.authservice.controller;
 
-import com.hivein.authservice.model.entity.UserLoginInfo;
 import com.hivein.authservice.model.request.LoginRequest;
 import com.hivein.authservice.model.response.TokenResponse;
 import com.hivein.authservice.service.AuthService;
