@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "${userData.service.name}", url = "${userData.service.base.url}")
 public interface UserDataApi {
 
-    @GetMapping("/get-authinfo/{username}")
+    @GetMapping("/admin/get-authinfo/{username}")
     LoginInfoResponse getLoginInfo(@PathVariable(name = "username") String username) throws BaseException;
 }
