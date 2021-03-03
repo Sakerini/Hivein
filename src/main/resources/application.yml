@@ -10,7 +10,7 @@ security:
     header: Authorization
     prefix: Bearer
     expiration: 86400
-    secret: hubabubamarakuya
+    secret: 333sektumsempraaladinabrakadabra333
 
 spring:
   application:
