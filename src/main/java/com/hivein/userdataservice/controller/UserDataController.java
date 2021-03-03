@@ -1,11 +1,5 @@
 package com.hivein.userdataservice.controller;
 
-import com.hivein.userdataservice.exception.EmailNotFoundException;
-import com.hivein.userdataservice.exception.UsernameNotFoundException;
-import com.hivein.userdataservice.model.dto.RoleDTO;
-import com.hivein.userdataservice.model.entity.Authority;
-import com.hivein.userdataservice.model.entity.User;
-import com.hivein.userdataservice.model.response.AuthInformationResponse;
 import com.hivein.userdataservice.model.response.BaseResponse;
 import com.hivein.userdataservice.service.UserService;
 import com.hivein.userdataservice.util.StatusCodes;
@@ -13,15 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class UserDataController {
 
     private final UserService userService;
@@ -33,57 +25,8 @@ public class UserDataController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PutMapping("/activate/{email}")
-    public ResponseEntity<?> activateAccount(@PathVariable(name = "email") String email) throws EmailNotFoundException {
-        Optional<User> userOptional = userService.findByEmail(email);
-        if (!userOptional.isPresent()) {
-            log.error("ERROR: Activating account Email not found " + email);
-            throw new EmailNotFoundException(StatusCodes.NOT_FOUND.getCode(), "Email not found");
-        }
-
-        User user = userOptional.get();
-        user.setActive(true);
-        userService.saveUser(user);
-        return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "User activated"));
-    }
-
-    @GetMapping("/get-authinfo/{username}")
-    public ResponseEntity<?> getUserAuthInfo(
-            @PathVariable(name = "username") String username) throws UsernameNotFoundException {
-        log.info("Inside UserDataController getting user authentication information ${}", username);
-
-        Optional<User> optionalUser = userService.findByUsername(username);
-        if (!optionalUser.isPresent()) {
-            log.error("ERROR: GetAuth info Username not found " + username);
-            throw new UsernameNotFoundException(StatusCodes.NOT_FOUND.getCode(), "Username not found");
-        }
-
-        User user = optionalUser.get();
-        Set<RoleDTO> userRoles = new HashSet<>();
-
-        for (Authority role : user.getRoles()) {
-            userRoles.add(new RoleDTO(role.getUser().getUsername(), role.getRole()));
-        }
-
-        AuthInformationResponse response =
-                new AuthInformationResponse(user.getUsername(), user.getPassword(), user.isActive(), userRoles);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @PutMapping("/change-password/")
-    public ResponseEntity<?> changeUsersPassword(
-            @RequestParam(name = "username") String username, @RequestParam(name = "password") String password)
-            throws UsernameNotFoundException {
-        Optional<User> userOptional = userService.findByUsername(username);
-        if (!userOptional.isPresent()) {
-            log.error("ERROR: Changing password failed username not found " + username);
-            throw new UsernameNotFoundException(StatusCodes.NOT_FOUND.getCode(), "Username not found");
-        }
-
-        User user = userOptional.get();
-        user.setPassword(passwordEncoder.encode(password));
-        userService.saveUser(user);
-        return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "Password changed"));
+    @GetMapping("/test")
+    public ResponseEntity<?> testMethod() {
+        return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "HELLO BEE"));
     }
 }
