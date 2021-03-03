@@ -18,7 +18,7 @@ zuul:
   sensitive-headers: Cookie,Set-Cookie
   routes:
     auth:
-      url: ${AUTH_SERVICE:https://hivein-authentication.herokuapp.com/}
+      url: ${AUTH_SERVICE:https://hivein-authentication.herokuapp.com/auth}
     user:
       url: ${USER_SERVICE:https://hivein-userdata.herokuapp.com/user}
     register:
