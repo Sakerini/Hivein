@@ -26,8 +26,8 @@ public class JwtServiceImpl implements JwtService {
         log.info("Generating token... Jwt Service");
 
         Long timeNow = System.currentTimeMillis();
-
         return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
                 .setSubject(authentication.getName())
                 .claim("authorities", authentication.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
