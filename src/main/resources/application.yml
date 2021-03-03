@@ -34,3 +34,5 @@ security:
     resource:
       jwt:
         key-value: 333sektumsempraaladinabrakadabra333
+        header: Authorization
+        prefix: Bearer
