@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "${userData.service.name}", url = "${userData.service.base.url}")
 public interface DataServiceApi {
 
-    @PutMapping("/activate/{email}")
+    @PutMapping("/admin/activate/{email}")
     BasicResponse activateEmail(@PathVariable(name = "email") String email);
 
-    @PutMapping("/change-password/")
+    @PutMapping("/admin/change-password/")
     BasicResponse changePassword(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password);
 }
