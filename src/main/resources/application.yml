@@ -25,6 +25,11 @@ auth:
     base:
       url: https://hivein-authentication.herokuapp.com/
     name: auth-service
+userData:
+  service:
+    base:
+      url: https://hivein-userdata.herokuapp.com/
+    name: userData
 
 zuul:
   sensitive-headers: Cookie,Set-Cookie

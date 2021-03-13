@@ -1,5 +1,6 @@
 package com.hivein.gateway.security.filter;
 
+import com.hivein.gateway.model.JwtUser;
 import com.hivein.gateway.service.AuthService;
 import com.hivein.gateway.service.TokenVerificationService;
 import io.jsonwebtoken.Jwts;
