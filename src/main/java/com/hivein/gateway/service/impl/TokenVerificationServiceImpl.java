@@ -1,7 +1,9 @@
 package com.hivein.gateway.service.impl;
 
+import com.hivein.gateway.service.AuthService;
 import com.hivein.gateway.service.TokenVerificationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Service
 public class TokenVerificationServiceImpl implements TokenVerificationService {
+
+    private final AuthService authService;
+
+    @Autowired
+    public TokenVerificationServiceImpl(AuthService authService) {
+        this.authService = authService;
+    }
 
     @Override
     public String extractTokenFromRequest(HttpServletRequest req) {
@@ -22,9 +31,9 @@ public class TokenVerificationServiceImpl implements TokenVerificationService {
 
     @Override
     public boolean validateToken(String token) {
-        //Todo FeignCall to validate token
-        if (token.equals("gud"))
+        if (authService.validateToken(token)) {
             return true;
+        }
         return false;
     }
 }
