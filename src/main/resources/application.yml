@@ -28,11 +28,3 @@ zuul:
   host:
     connect-timeout-millis: 30000
     socket-timeout-millis: 30000
-
-security:
-  oauth2:
-    resource:
-      jwt:
-        key-value: 333sektumsempraaladinabrakadabra333
-        header: Authorization
-        prefix: Bearer
