@@ -53,7 +53,6 @@ public class JwtServiceImpl implements JwtService {
             Jwts.parser()
                     .setSigningKey(jwtConfig.getSecret().getBytes())
                     .parseClaimsJws(token);
-
             return true;
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");
