@@ -52,14 +52,7 @@ public class AuthController {
     }
 
     @GetMapping("/user-info")
-    public ResponseEntity<?> getUserInfo(@RequestParam(name = "username") String username) {
-        try {
-            UserDetails details = userDetailsService.loadUserByUsername(username);
-        } catch (FeignException exc) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse(StatusCodes.NOT_FOUND.getCode(), "USERNAME NOT FOUND"));
-        } catch (Exception exc) {
-        }
-        return ResponseEntity.ok(userDetailsService.loadUserByUsername(username));
+    public UserDetails getUserInfo(@RequestParam(name = "username") String username) {
+        return userDetailsService.loadUserByUsername(username);
     }
 }
