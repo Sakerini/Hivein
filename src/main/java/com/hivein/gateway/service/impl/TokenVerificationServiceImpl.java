@@ -2,6 +2,7 @@ package com.hivein.gateway.service.impl;
 
 import com.hivein.gateway.service.AuthService;
 import com.hivein.gateway.service.TokenVerificationService;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,14 @@ public class TokenVerificationServiceImpl implements TokenVerificationService {
 
     @Override
     public boolean validateToken(String token) {
-        if (authService.validateToken(token)) {
-            return true;
+        try {
+            if (authService.validateToken(token)) {
+                return true;
+            }
+        } catch (FeignException exc) {
+            return false;
         }
         return false;
+
     }
 }

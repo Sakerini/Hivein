@@ -1,11 +1,9 @@
 package com.hivein.gateway.security.filter;
 
-import com.hivein.gateway.model.JwtUser;
 import com.hivein.gateway.service.AuthService;
 import com.hivein.gateway.service.TokenVerificationService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.GenericFilterBean;
@@ -34,7 +32,7 @@ public class JwtTokenFilter extends GenericFilterBean {
         if (token != null && tokenVerificationService.validateToken(token)) {
             UserDetails userDetails = authService.getUserDetails("DJonsi");
             SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities())
+                    new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities())
             );
         }
         chain.doFilter(req, res);
