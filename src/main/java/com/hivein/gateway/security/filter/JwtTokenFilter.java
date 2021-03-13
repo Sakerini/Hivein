@@ -1,8 +1,7 @@
 package com.hivein.gateway.security.filter;
 
-import com.hivein.gateway.service.AuthService;
+import com.hivein.gateway.service.ResourceService;
 import com.hivein.gateway.service.TokenVerificationService;
-import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +17,11 @@ import java.io.IOException;
 public class JwtTokenFilter extends GenericFilterBean {
 
     private TokenVerificationService tokenVerificationService;
-    private AuthService authService;
+    private ResourceService resourceService;
 
-    public JwtTokenFilter(TokenVerificationService tokenVerificationService, AuthService authService) {
+    public JwtTokenFilter(TokenVerificationService tokenVerificationService, ResourceService resourceService) {
         this.tokenVerificationService = tokenVerificationService;
-        this.authService = authService;
+        this.resourceService = resourceService;
     }
 
     @Override
@@ -30,15 +29,11 @@ public class JwtTokenFilter extends GenericFilterBean {
 
         String token = tokenVerificationService.extractTokenFromRequest((HttpServletRequest) req);
         if (token != null && tokenVerificationService.validateToken(token)) {
-            UserDetails userDetails = authService.getUserDetails("DJonsi");
+            UserDetails userDetails = resourceService.getUserDetails(tokenVerificationService.getUsername(token));
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities())
             );
         }
         chain.doFilter(req, res);
-    }
-
-    public String getUsername(String token) {
-        return Jwts.parser().setSigningKey("secretulya").parseClaimsJws(token).getBody().getSubject();
     }
 }

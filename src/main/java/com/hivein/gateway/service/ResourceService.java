@@ -2,8 +2,7 @@ package com.hivein.gateway.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-public interface AuthService {
+public interface ResourceService {
 
-    boolean validateToken(String token);
     UserDetails getUserDetails(String username);
 }

@@ -1,14 +1,12 @@
 package com.hivein.gateway.service.impl;
 
-import com.hivein.gateway.api.AuthServiceApi;
 import com.hivein.gateway.api.UserDataApi;
 import com.hivein.gateway.model.JwtUser;
 import com.hivein.gateway.model.response.AuthorizationInfoResponse;
 import com.hivein.gateway.model.response.RoleDTO;
-import com.hivein.gateway.service.AuthService;
+import com.hivein.gateway.service.ResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,24 +17,13 @@ import java.util.Set;
 
 @Slf4j
 @Service
-public class AuthServiceImpl implements AuthService {
+public class ResourceServiceImpl implements ResourceService {
 
-    private final AuthServiceApi authServiceApi;
     private final UserDataApi userDataApi;
 
     @Autowired
-    public AuthServiceImpl(AuthServiceApi authServiceApi, UserDataApi userDataApi) {
-        this.authServiceApi = authServiceApi;
+    public ResourceServiceImpl(UserDataApi userDataApi) {
         this.userDataApi = userDataApi;
-    }
-
-    @Override
-    public boolean validateToken(String token) {
-        ResponseEntity<?> response = authServiceApi.validateToken(token);
-        if (response.getStatusCode().value() == 200) {
-            return true;
-        }
-        return false;
     }
 
     @Override

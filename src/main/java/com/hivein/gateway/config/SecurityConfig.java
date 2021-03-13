@@ -1,7 +1,7 @@
 package com.hivein.gateway.config;
 
 import com.hivein.gateway.security.jwt.JwtConfig;
-import com.hivein.gateway.service.AuthService;
+import com.hivein.gateway.service.ResourceService;
 import com.hivein.gateway.service.TokenVerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,14 +15,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_ENDPOINT = "/auth/signin";
+    private static final String REGISTER_ENDPOINT = "/register/**";
+    private static final String VERIFY_ENDPOINT = "/verify/**";
 
     private final TokenVerificationService verificationService;
-    private final AuthService authService;
+    private final ResourceService resourceService;
 
     @Autowired
-    public SecurityConfig(TokenVerificationService verificationService, AuthService authService) {
+    public SecurityConfig(TokenVerificationService verificationService, ResourceService resourceService) {
         this.verificationService = verificationService;
-        this.authService = authService;
+        this.resourceService = resourceService;
     }
 
     @Bean
@@ -40,8 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(REGISTER_ENDPOINT).permitAll()
+                .antMatchers(VERIFY_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfig(verificationService, authService));
+                .apply(new JwtConfig(verificationService, resourceService));
     }
 }

@@ -5,6 +5,17 @@ spring:
   application:
     name: ${APP_NAME:api-gateway}
 
+security:
+  basic:
+    enable: false
+
+  jwt:
+    uri: /auth/**
+    header: Authorization
+    prefix: Bearer
+    expiration: 86400
+    secret: 333sektumsempraaladinabrakadabra333
+
 eureka:
   client:
     register-with-eureka: true
@@ -20,11 +31,6 @@ feign:
       default:
         readTimeout: 15000
         connectTimeout: 5000
-auth:
-  service:
-    base:
-      url: https://hivein-authentication.herokuapp.com/
-    name: auth-service
 userData:
   service:
     base:

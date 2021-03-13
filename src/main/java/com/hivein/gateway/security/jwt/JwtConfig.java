@@ -1,7 +1,7 @@
 package com.hivein.gateway.security.jwt;
 
 import com.hivein.gateway.security.filter.JwtTokenFilter;
-import com.hivein.gateway.service.AuthService;
+import com.hivein.gateway.service.ResourceService;
 import com.hivein.gateway.service.TokenVerificationService;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,16 +11,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class JwtConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private TokenVerificationService verificationService;
-    private AuthService authService;
+    private ResourceService resourceService;
 
-    public JwtConfig(TokenVerificationService verificationService, AuthService authService) {
+    public JwtConfig(TokenVerificationService verificationService, ResourceService resourceService) {
         this.verificationService = verificationService;
-        this.authService = authService;
+        this.resourceService = resourceService;
     }
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
-        JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(verificationService, authService);
+        JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(verificationService, resourceService);
         httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
