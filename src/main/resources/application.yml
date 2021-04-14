@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          default-label: main
+          uri: https://github.com/Sakerini/Hivein-Config
+          username: ${username:acc}
+          password: ${password:pass}
+server:
+  port: 8888
+
