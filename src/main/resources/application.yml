@@ -1,45 +1,48 @@
-server:
-  port: 5000
-
-security:
-  basic:
-    enable: false
-
-  jwt:
-    uri: /auth/**
-    header: Authorization
-    prefix: Bearer
-    expiration: 86400
-    secret: 333sektumsempraaladinabrakadabra333
-
 spring:
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER:localhost/auth-service/default}
   application:
     name: auth-service
 
+server:
+  port:
+
+security:
+  basic:
+    enable:
+
+  jwt:
+    uri:
+    header:
+    prefix:
+    expiration:
+    secret:
+
   security:
     user:
-      name: admin
-      password: admin
+      name:
+      password:
 
 
 feign:
   client:
     config:
       default:
-        readTimeout: 15000
-        connectTimeout: 5000
+        readTimeout:
+        connectTimeout:
 userData:
   service:
     base:
-      url: https://hivein-userdata.herokuapp.com/
-    name: userData
+      url:
+    name:
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:https://hivein-registry.herokuapp.com/eureka}
+      defaultZone:
     instance:
-      hostname: ${HOSTNAME:hivein-registry}
+      hostname:
 
