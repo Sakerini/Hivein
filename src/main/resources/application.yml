@@ -12,3 +12,12 @@ spring:
 server:
   port: 8888
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URI:https://hivein-registry.herokuapp.com/eureka}
+    instance:
+      hostname: ${HOSTNAME:hivein-registry}
+
