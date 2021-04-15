@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hivein</groupId>
-    <artifactId>authservice</artifactId>
+    <artifactId>auth-service</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
-    <name>authservice</name>
+    <name>auth-service</name>
     <description>HiveIn Authentication Service</description>
     <properties>
         <java.version>11</java.version>

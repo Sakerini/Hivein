@@ -1,48 +1,41 @@
-spring:
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER:localhost/auth-service/default}
-  application:
-    name: auth-service
-
 server:
-  port:
+  port: 8080
 
 security:
   basic:
-    enable:
+    enable:false
 
   jwt:
-    uri:
-    header:
-    prefix:
-    expiration:
-    secret:
+    uri: /auth/**
+    header: Authorization
+    prefix: Bearer
+    expiration: 86400
+    secret: ${SECRET:pass}
 
   security:
     user:
-      name:
-      password:
+      name: ${SECURITY_ADMIN:admin}
+      password: ${SECURITY_ADMIN_PASSWORD:admin}
 
 
 feign:
   client:
     config:
       default:
-        readTimeout:
-        connectTimeout:
+        readTimeout: 15000
+        connectTimeout: 5000
 userData:
   service:
     base:
-      url:
-    name:
+      url: ${USER_DATA_SERIVCE_URI:https://hivein-userdata.herokuapp.com/}
+    name: userData
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone:
+      defaultZone: ${EUREKA_URI:https://hivein-registry.herokuapp.com/eureka}
     instance:
-      hostname:
+      hostname: ${HOSTNAME:hivein-registry}
 
