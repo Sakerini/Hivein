@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    config:
+      uri: https://hivein-config-server.herokuapp.com
+  application:
+    name: registry
