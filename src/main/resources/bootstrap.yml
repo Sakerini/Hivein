@@ -3,4 +3,4 @@ spring:
     name: verification-service
   cloud:
     config:
-      uri: https://hivein-config-server.herokuapp.com
+      uri: ${CONFIG_SERVER:localhost:8888}
