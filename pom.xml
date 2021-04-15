@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hivein</groupId>
-    <artifactId>userdataservice</artifactId>
+    <artifactId>userdata-service</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
-    <name>userdataservice</name>
+    <name>userdata-service</name>
     <description>HiveIn User Data Service</description>
     <properties>
         <java.version>11</java.version>
@@ -35,6 +35,17 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <version>3.0.0-M5</version>
         </dependency>
 
         <dependency>
