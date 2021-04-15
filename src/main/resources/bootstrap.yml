@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      uri: https://hivein-config-server.herokuapp.com
