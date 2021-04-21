@@ -1,10 +1,10 @@
-package com.hivein.authservice;
+package com.hivein.tokenservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HiveinAuthserviceApplicationTests {
+class TokenserviceApplicationTests {
 
     @Test
     void contextLoads() {
