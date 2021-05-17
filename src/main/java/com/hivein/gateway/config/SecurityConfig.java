@@ -24,17 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     private final TokenVerificationService verificationService;
     private final ResourceService resourceService;
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("*");
-            }
-        };
-    }
-
     @Autowired
     public SecurityConfig(TokenVerificationService verificationService, ResourceService resourceService) {
         this.verificationService = verificationService;
