@@ -1,4 +1,4 @@
-package com.hivein.userdataservice.model.response;
+package com.hivein.userdataservice.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
-public class UserSummaryResponse {
+public class UserSummaryDTO {
 
     @JsonProperty("id")
     private long id;

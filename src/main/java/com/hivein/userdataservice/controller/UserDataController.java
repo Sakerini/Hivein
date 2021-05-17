@@ -3,9 +3,10 @@ package com.hivein.userdataservice.controller;
 import com.hivein.userdataservice.model.entity.User;
 import com.hivein.userdataservice.model.response.BaseResponse;
 import com.hivein.userdataservice.model.response.ErrorResponse;
-import com.hivein.userdataservice.model.response.UserSummaryResponse;
+import com.hivein.userdataservice.model.dto.UserSummaryDTO;
 import com.hivein.userdataservice.service.UserService;
 import com.hivein.userdataservice.util.StatusCodes;
+import com.hivein.userdataservice.util.UserDataUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,12 +48,23 @@ public class UserDataController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok(UserSummaryResponse
+        return ResponseEntity.ok(UserSummaryDTO
                 .builder()
                 .id(user.get().getId())
                 .username(user.get().getUsername())
                 .name(user.get().getUserProfile().getDisplayName())
                 .profilePicture(user.get().getUserProfile().getProfilePictureUrl())
                 .build());
+    }
+
+    @GetMapping("/find/summaries/{username}")
+    public ResponseEntity<?> findAllUserSummaries(@PathVariable(value = "username") String username) {
+        log.info("retrieving all users summaries");
+
+        return ResponseEntity.ok(userService
+                .findAllUsers()
+                .stream()
+                .filter(user -> !user.getUsername().equals(username))
+                .map(UserDataUtil::convertTo));
     }
 }
