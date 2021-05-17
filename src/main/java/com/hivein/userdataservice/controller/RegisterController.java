@@ -42,7 +42,7 @@ public class RegisterController {
                                 .displayName(registerRequest.getDisplayName())
                                 .firstName(registerRequest.getFirstName())
                                 .lastName(registerRequest.getLastName())
-                                .profilePictureUrl("NULL")
+                                .profilePictureUrl(registerRequest.getProfilePicUrl())
                                 .birthday(registerRequest.getBirthDay())
                                 .address(registerRequest.getAddress())
                                 .build())

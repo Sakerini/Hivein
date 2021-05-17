@@ -20,6 +20,7 @@ public class RegisterRequest {
     private String displayName;
     private String firstName;
     private String lastName;
+    private String profilePicUrl;
     private Date birthDay;
     private Address address;
 }

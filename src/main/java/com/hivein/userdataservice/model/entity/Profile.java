@@ -21,16 +21,13 @@ public class Profile {
 
     @NotNull
     private String displayName;
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
-    private String profilePictureUrl;
 
     @NotNull
+    private String profilePictureUrl;
     private Date birthday;
 
-    @NotNull
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_fk")
     private Address address;
