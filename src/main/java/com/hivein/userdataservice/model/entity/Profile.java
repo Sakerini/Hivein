@@ -21,6 +21,7 @@ public class Profile {
 
     @NotNull
     private String displayName;
+
     private String firstName;
     private String lastName;
 
