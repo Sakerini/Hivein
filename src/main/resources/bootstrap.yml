@@ -5,18 +5,18 @@ spring:
     config:
       uri: ${CONFIG_SERVER:localhost:8888}
   datasource:
-    url: ${DATASOURCE_URI:jdbc:postgresql://ec2-54-74-156-137.eu-west-1.compute.amazonaws.com:5432/d98almhna1b5s9}
+    url: ${DATASOURCE_URI:jdbc:postgresql://ec2-79-125-30-28.eu-west-1.compute.amazonaws.com:5432/d9gvv12sorgimq}
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USER:mhravsyezterfd}
-    password: ${DB_PASSWORD:66a7c6f5bb75d08199117dcf3a2dcf4f159ee38be403e511839b8a1fd48b0661}
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+    username: ${DB_USER:bohazwqjbovjwc}
+    password: ${DB_PASSWORD:01d0af31863a5f457bcfd4a913a3ca5bf521c2b58121045fb9e534757eafcf36}
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: true
 
-  security:
-    user:
-      name: ${SECURITY_NAME:admin}
-      password: ${SECURITY_PASS:admin}
+    security:
+      user:
+        name: ${SECURITY_NAME:admin}
+        password: ${SECURITY_PASS:admin}
 
 feign:
   client:
@@ -40,4 +40,4 @@ eureka:
       hostname: ${HOSTNAME:hivein-registry}
 
 server:
-  port: 8888
+  port: 8081
