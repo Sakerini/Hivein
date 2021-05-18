@@ -1,9 +1,9 @@
 package com.hivein.chatservice.controller;
 
 import com.hivein.chatservice.model.ChatNotification;
-import com.hivein.chatservice.model.enitity.ChatMessage;
-import com.hivein.chatservice.service.ChatMessageService;
-import com.hivein.chatservice.service.ChatRoomService;
+import com.hivein.chatservice.model.ChatMessage;
+import com.hivein.chatservice.model.ChatRoom;
+import com.hivein.chatservice.service.ChatStorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Optional;
+import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -22,16 +22,18 @@ import java.util.Optional;
 public class ChatController {
 
     private final SimpMessagingTemplate messagingTemplate;
-    private final ChatMessageService chatMessageService;
-    private final ChatRoomService chatRoomService;
+    private final ChatStorageService chatStorageService;
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
-        Optional<String> chatId = chatRoomService
-                .getChatId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true);
-        chatMessage.setChatId(chatId.get());
+        ChatRoom chatRoom = chatStorageService.getRoom(chatMessage.getSenderId(), chatMessage.getRecipientId());
+        if (Objects.isNull(chatRoom)) {
+            chatStorageService.createRoom(chatMessage.getSenderId(), chatMessage.getRecipientId());
+            chatRoom = chatStorageService.getRoom(chatMessage.getSenderId(), chatMessage.getRecipientId());
+        }
+        chatMessage.setChatId(chatRoom.getChatId());
 
-        ChatMessage saved = chatMessageService.save(chatMessage);
+        ChatMessage saved = chatStorageService.saveMessage(chatMessage);
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipientId(),"/queue/messages",
                 new ChatNotification(
@@ -47,19 +49,19 @@ public class ChatController {
 
         log.info("Counting new messages");
         return ResponseEntity
-                .ok(chatMessageService.countNewMessages(senderId, recipientId));
+                .ok(chatStorageService.countNewMessages(senderId, recipientId));
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}")
     public ResponseEntity<?> findChatMessages ( @PathVariable String senderId,
                                                 @PathVariable String recipientId) {
         return ResponseEntity
-                .ok(chatMessageService.findChatMessages(senderId, recipientId));
+                .ok(chatStorageService.getMessages(senderId, recipientId));
     }
 
     @GetMapping("/messages/{id}")
     public ResponseEntity<?> findMessage ( @PathVariable long id) {
         return ResponseEntity
-                .ok(chatMessageService.findById(id));
+                .ok(chatStorageService.getMessage(id));
     }
 }
