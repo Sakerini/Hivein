@@ -22,8 +22,7 @@ public class MessageController {
     @PostMapping("/save")
     public ResponseEntity<?> saveMessage(@RequestBody ChatMessage chatMessage) {
         log.info("Inside saveMessage in chat controller");
-        chatMessageService.save(chatMessage);
-        return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "message saved"));
+        return ResponseEntity.ok(chatMessageService.save(chatMessage));
     }
 
     @GetMapping("/count/new/{senderId}/{recipientId}")

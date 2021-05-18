@@ -21,6 +21,7 @@ public class ChatMessageServiceImpl {
     private final ChatMessageRepository repository;
     private final ChatRoomServiceImpl chatRoomService;
 
+    //todo check id trans...
     public ChatMessage save(ChatMessage chatMessage) {
         log.info("Recieved a message: Saving");
         chatMessage.setStatus(MessageStatus.RECEIVED.toString());
