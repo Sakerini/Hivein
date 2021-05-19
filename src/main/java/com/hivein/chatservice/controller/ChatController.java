@@ -27,6 +27,7 @@ public class ChatController {
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
+        log.info("Processing a message");
         ChatRoom chatRoom = chatStorageService.getRoom(chatMessage.getSenderId(), chatMessage.getRecipientId());
         if (Objects.isNull(chatRoom)) {
             chatStorageService.createRoom(chatMessage.getSenderId(), chatMessage.getRecipientId());
