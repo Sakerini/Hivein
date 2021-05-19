@@ -30,6 +30,7 @@ public class ChatStorageServiceImpl implements ChatStorageService {
 
     @Override
     public ChatMessage saveMessage(ChatMessage chatMessage) {
+        System.out.println();
         return chatStorageApi.saveMessage(chatMessage);
     }
 

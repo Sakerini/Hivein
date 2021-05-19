@@ -2,7 +2,7 @@ package com.hivein.chatservice.model;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +16,6 @@ public class ChatMessage {
    private String senderName;
    private String recipientName;
    private String content;
-   private Date timestamp;
+   private Timestamp timestamp;
    private String status;
 }
