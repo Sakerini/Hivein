@@ -20,7 +20,6 @@ import java.util.Objects;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/chat")
 public class ChatController {
 
     private final SimpMessagingTemplate messagingTemplate;
