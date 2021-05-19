@@ -21,7 +21,6 @@ import java.util.List;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    /*
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
@@ -31,8 +30,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         .allowedMethods("*");
             }
         };
-    }s
-     */
+    }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
