@@ -14,14 +14,33 @@ import {
 } from "../atom/globalState";
 import ScrollToBottom from "react-scroll-to-bottom";
 import "./Chat.css";
+import { getCurrentUser } from "../util/ApiUtil";
+
 
 var stompClient = null;
 const Chat = (props) => {
-  const currentUser = useRecoilValue(loggedInUser);
   const [text, setText] = useState("");
   const [contacts, setContacts] = useState([]);
   const [activeContact, setActiveContact] = useRecoilState(chatActiveContact);
   const [messages, setMessages] = useRecoilState(chatMessages);
+
+  const [currentUser, setLoggedInUser] = useRecoilState(loggedInUser);
+  useEffect(() => {
+    if (localStorage.getItem("accessToken") === null) {
+      props.history.push("/login");
+    }
+    loadCurrentUser();
+  }, []);
+
+  const loadCurrentUser = () => {
+    getCurrentUser()
+      .then((response) => {
+        setLoggedInUser(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     if (localStorage.getItem("accessToken") === null) {
@@ -32,27 +51,28 @@ const Chat = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log({activeContact})
+    //console.log({activeContact})
     if (activeContact === undefined) return;
-    findChatMessages(activeContact.id, currentUser.id).then((msgs) =>{
+    
+    findChatMessages(activeContact.id, currentUser.id).then((msgs) => {
       setMessages(msgs)
       console.log({msgs})
-    }
-    );
+    });
+
     loadContacts();
   }, [activeContact]);
 
   const connect = () => {
     const Stomp = require("stompjs");
     var SockJS = require("sockjs-client");
-    SockJS = new SockJS("https://hivein-gateway.herokuapp.com/chat/ws");
+    SockJS = new SockJS("http://hivein-chatservice.herokuapp.com/ws");
     stompClient = Stomp.over(SockJS);
     stompClient.connect({}, onConnected, onError);
   };
 
   const onConnected = () => {
-    console.log("connected");
-    console.log(currentUser);
+    //console.log("connected");
+    //console.log(currentUser);
     stompClient.subscribe(
       "/user/" + currentUser.id + "/queue/messages",
       onMessageReceived
@@ -68,7 +88,7 @@ const Chat = (props) => {
     const active = JSON.parse(sessionStorage.getItem("recoil-persist"))
       .chatActiveContact;
 
-    if (active.id === notification.senderId) {
+    if (active.id === +notification.senderId) {
       findChatMessage(notification.id).then((message) => {
         const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
           .chatMessages;
@@ -108,9 +128,6 @@ const Chat = (props) => {
         })
       )
     );
-
-
-    console.log(promise)
 
     promise.then((promises) =>
       Promise.all(promises).then((users) => {
@@ -204,8 +221,8 @@ const Chat = (props) => {
         <ScrollToBottom className="messages">
           <ul>
             {messages.map((msg) => (
-              <li class={msg.senderId === currentUser.id ? "sent" : "replies"}>
-                {msg.senderId !== currentUser.id && (
+              <li class={+msg.senderId === +currentUser.id ? "sent" : "replies"}>
+                {+msg.senderId !== +currentUser.id && (
                   <img src={activeContact.profilePicture} alt="" />
                 )}
                 <p>{msg.content}</p>

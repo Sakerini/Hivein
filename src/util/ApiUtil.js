@@ -93,6 +93,14 @@ export function countNewMessages(senderId, recipientId) {
 }
 
 export function findChatMessages(senderId, recipientId) {
+  return fetchChatMessages(senderId, recipientId).then(result => {
+    return fetchChatMessages(recipientId, senderId).then(result2 => {
+      return [...result,...result2].sort((a,b) => Date.parse(a.timestamp) - Date.parse(b.timestamp))
+    })
+  })
+}
+
+function fetchChatMessages(senderId, recipientId) {
   if (!localStorage.getItem("accessToken")) {
     return Promise.reject("No access token set.");
   }
@@ -102,7 +110,6 @@ export function findChatMessages(senderId, recipientId) {
     method: "GET",
   });
 }
-
 export function findChatMessage(id) {
   if (!localStorage.getItem("accessToken")) {
     return Promise.reject("No access token set.");
