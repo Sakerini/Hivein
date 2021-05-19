@@ -36,10 +36,8 @@ public class MessageController {
     @GetMapping("/get/{senderId}/{recipientId}")
     public ResponseEntity<?> getMessages(@PathVariable String senderId, @PathVariable String recipientId) {
         log.info("Inside get messages");
-        List<ChatMessage> messagesFrom = chatMessageService.findChatMessages(senderId, recipientId);
-        List<ChatMessage> messagesTo = chatMessageService.findChatMessages(recipientId, senderId);
-        messagesTo.addAll(messagesFrom);
-        return ResponseEntity.ok(messagesTo);
+        List<ChatMessage> messages = chatMessageService.findChatMessages(senderId, recipientId);
+        return ResponseEntity.ok(messages);
     }
 
     @GetMapping("/get/{id}")
