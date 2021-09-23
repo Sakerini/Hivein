@@ -3,6 +3,6 @@ spring:
     name: chatservice
   cloud:
     config:
-      uri: https://hivein-config-server.herokuapp.com
+      uri: ${CONFIG_SERVER}
 server:
   port: 8081
