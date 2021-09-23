@@ -1,5 +1,7 @@
 package com.hivein.userdataservice.controller;
 
+import com.hivein.userdataservice.model.entity.Address;
+import com.hivein.userdataservice.model.entity.Profile;
 import com.hivein.userdataservice.model.entity.User;
 import com.hivein.userdataservice.model.response.BaseResponse;
 import com.hivein.userdataservice.model.response.ErrorResponse;
@@ -12,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -66,5 +65,36 @@ public class UserDataController {
                 .stream()
                 .filter(user -> !user.getUsername().equals(username))
                 .map(UserDataUtil::convertTo));
+    }
+
+    @PutMapping("/update-summary")
+    public ResponseEntity<?> updateProfile(@RequestBody UserSummaryDTO summaryDTO) {
+
+        Optional<User> userOptional = userService.findByUsername(summaryDTO.getUsername());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Profile profile = user.getUserProfile();
+            Address address = profile.getAddress();
+            address.setCity(summaryDTO.getCity());
+            address.setCountry(summaryDTO.getCountry());
+            address.setZipCode(summaryDTO.getZipCode());
+            address.setStreetName(summaryDTO.getStreetName());
+            profile.setAddress(address);
+
+            profile.setBirthday(summaryDTO.getBirthday());
+            profile.setProfilePictureUrl(summaryDTO.getProfilePicture());
+            profile.setDisplayName(summaryDTO.getName());
+            profile.setFirstName(summaryDTO.getFirstName());
+            profile.setLastName(summaryDTO.getLastName());
+            user.setUserProfile(profile);
+
+            userService.updateUser(user);
+            return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "User updated"));
+        }
+
+        return new ResponseEntity<>(new ErrorResponse(
+                StatusCodes.NOT_FOUND.getCode(),
+                "Username not found"),
+                HttpStatus.NOT_FOUND);
     }
 }

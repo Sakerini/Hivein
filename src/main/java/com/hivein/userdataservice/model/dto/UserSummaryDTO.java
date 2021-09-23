@@ -3,6 +3,9 @@ package com.hivein.userdataservice.model.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
 @Setter
 @Getter
 @Builder
@@ -17,4 +20,11 @@ public class UserSummaryDTO {
     private String name;
     @JsonProperty("profilePicture")
     private String profilePicture;
+    private String firstName;
+    private String lastName;
+    private Date birthday;
+    private String country;
+    private String city;
+    private int zipCode;
+    private String streetName;
 }
