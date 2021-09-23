@@ -9,6 +9,7 @@ import com.hivein.userdataservice.model.dto.UserSummaryDTO;
 import com.hivein.userdataservice.service.UserService;
 import com.hivein.userdataservice.util.StatusCodes;
 import com.hivein.userdataservice.util.UserDataUtil;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
@@ -77,6 +80,7 @@ public class UserDataController {
                 .map(UserDataUtil::convertTo));
     }
 
+    @SneakyThrows
     @PutMapping("/update-summary")
     public ResponseEntity<?> updateProfile(@RequestBody UserSummaryDTO summaryDTO) {
 
@@ -90,9 +94,8 @@ public class UserDataController {
             address.setZipCode(summaryDTO.getZipCode());
             address.setStreetName(summaryDTO.getStreetName());
             profile.setAddress(address);
-            String birthday = profile.getBirthday().toString().substring(0,10);
-
-            profile.setBirthday(new Date(birthday));
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            profile.setBirthday(formatter.parse(summaryDTO.getBirthday()));
             profile.setProfilePictureUrl(summaryDTO.getProfilePicture());
             profile.setDisplayName(summaryDTO.getName());
             profile.setFirstName(summaryDTO.getFirstName());
