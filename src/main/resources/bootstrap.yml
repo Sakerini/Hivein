@@ -1,6 +1,7 @@
 spring:
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER:localhost:8888}
   application:
     name: registry
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
