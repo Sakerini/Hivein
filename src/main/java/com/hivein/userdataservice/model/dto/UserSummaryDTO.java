@@ -22,7 +22,7 @@ public class UserSummaryDTO {
     private String profilePicture;
     private String firstName;
     private String lastName;
-    private Date birthday;
+    private String birthday;
     private String country;
     private String city;
     private int zipCode;

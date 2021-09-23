@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Slf4j
@@ -47,13 +48,15 @@ public class UserDataController {
                     HttpStatus.BAD_REQUEST);
         }
 
+        String birthday = user.get().getUserProfile().getBirthday().toString().substring(0,10);
+
         return ResponseEntity.ok(UserSummaryDTO
                 .builder()
                 .id(user.get().getId())
                 .username(user.get().getUsername())
                 .name(user.get().getUserProfile().getDisplayName())
                 .profilePicture(user.get().getUserProfile().getProfilePictureUrl())
-                .birthday(user.get().getUserProfile().getBirthday())
+                .birthday(birthday)
                 .city(user.get().getUserProfile().getAddress().getCity())
                 .country(user.get().getUserProfile().getAddress().getCountry())
                 .streetName(user.get().getUserProfile().getAddress().getStreetName())
@@ -87,8 +90,9 @@ public class UserDataController {
             address.setZipCode(summaryDTO.getZipCode());
             address.setStreetName(summaryDTO.getStreetName());
             profile.setAddress(address);
+            String birthday = profile.getBirthday().toString().substring(0,10);
 
-            profile.setBirthday(summaryDTO.getBirthday());
+            profile.setBirthday(new Date(birthday));
             profile.setProfilePictureUrl(summaryDTO.getProfilePicture());
             profile.setDisplayName(summaryDTO.getName());
             profile.setFirstName(summaryDTO.getFirstName());
