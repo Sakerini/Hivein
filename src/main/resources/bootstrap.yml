@@ -3,4 +3,4 @@ spring:
     name: verification-service
   cloud:
     config:
-      uri: ${CONFIG_SERVER:localhost:8888}
+      uri: ${CONFIG_SERVER}
