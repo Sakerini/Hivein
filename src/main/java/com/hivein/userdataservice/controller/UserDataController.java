@@ -53,6 +53,13 @@ public class UserDataController {
                 .username(user.get().getUsername())
                 .name(user.get().getUserProfile().getDisplayName())
                 .profilePicture(user.get().getUserProfile().getProfilePictureUrl())
+                .birthday(user.get().getUserProfile().getBirthday())
+                .city(user.get().getUserProfile().getAddress().getCity())
+                .country(user.get().getUserProfile().getAddress().getCountry())
+                .streetName(user.get().getUserProfile().getAddress().getStreetName())
+                .firstName(user.get().getUserProfile().getFirstName())
+                .lastName(user.get().getUserProfile().getLastName())
+                .zipCode(user.get().getUserProfile().getAddress().getZipCode())
                 .build());
     }
 
