@@ -4,5 +4,3 @@ spring:
   cloud:
     config:
       uri: ${CONFIG_SERVER}
-server:
-  port: 8081
