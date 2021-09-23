@@ -3,41 +3,4 @@ spring:
     name: userdata-service
   cloud:
     config:
-      uri: ${CONFIG_SERVER:localhost:8888}
-  datasource:
-    url: ${DATASOURCE_URI:jdbc:postgresql://ec2-79-125-30-28.eu-west-1.compute.amazonaws.com:5432/d9gvv12sorgimq}
-    driver-class-name: org.postgresql.Driver
-    username: ${DB_USER:bohazwqjbovjwc}
-    password: ${DB_PASSWORD:01d0af31863a5f457bcfd4a913a3ca5bf521c2b58121045fb9e534757eafcf36}
-    jpa:
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
-      show-sql: true
-
-    security:
-      user:
-        name: ${SECURITY_NAME:admin}
-        password: ${SECURITY_PASS:admin}
-
-feign:
-  client:
-    config:
-      default:
-        readTimeout: 15000
-        connectTimeout: 1500
-verificationService:
-  service:
-    base:
-      url: ${VERIFICATION_URL:https://hivein-verification.herokuapp.com}
-    name: ${VERIFICATION_NAME:verificationService}
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: ${EUREKA_URI:https://hivein-registry.herokuapp.com/eureka}
-    instance:
-      hostname: ${HOSTNAME:hivein-registry}
-
-server:
-  port: 8081
+      uri: ${CONFIG_SERVER}
