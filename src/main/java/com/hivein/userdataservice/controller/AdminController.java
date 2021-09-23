@@ -86,4 +86,16 @@ public class AdminController {
         userService.saveUser(user);
         return ResponseEntity.ok(new BaseResponse(StatusCodes.OK.getCode(), "Password changed"));
     }
+
+    @DeleteMapping("/delete/user/{username}")
+    public ResponseEntity<?> deleteUser(@PathVariable(name = "username") String username) throws UsernameNotFoundException {
+        log.info("Deleting user: " + username);
+        try {
+            userService.deleteUserByUsername(username);
+        } catch (Exception exc) {
+            throw new UsernameNotFoundException(StatusCodes.NOT_FOUND.getCode(), "Username not found");
+        }
+
+        return ResponseEntity.ok(new BaseResponse(StatusCodes.NOT_FOUND.getCode(), "User delted!"));
+    }
 }
