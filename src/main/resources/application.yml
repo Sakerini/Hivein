@@ -7,8 +7,6 @@ spring:
         git:
           default-label: main
           uri: https://github.com/Sakerini/Hivein-Config
-          username: ${username:acc}
-          password: ${password:pass}
 server:
   port: 8888
 
@@ -17,7 +15,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:https://hivein-registry.herokuapp.com/eureka}
+      defaultZone: ${EUREKA_URI}
     instance:
-      hostname: ${HOSTNAME:hivein-registry}
+      hostname: ${HOSTNAME}
 
